@@ -8,6 +8,12 @@ export async function getTodosPosts() {
     return colecao.find().toArray();
 }
 
+export async function criarPostagem(novaPostagem) {
+    const db = conexao.db("NetworkDB");
+    const colecao = db.collection("postagens");
+    return colecao.insertOne(novaPostagem);
+}
+
 /*
 
 export async function buscarPostPorId(id){
