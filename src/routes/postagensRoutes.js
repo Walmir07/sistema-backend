@@ -1,6 +1,12 @@
 import express from "express";
 import multer from "multer";
 import { listarPostagens, criarNovoPost, uploadImagem, atualizarNovaPostagem } from "../controllers/postagensController.js";
+import cors from "cors";
+
+const corsOptions = {
+  origin: "http://localhost:8000", // URL do front-end - Teste
+  optionsSuccessStatus: 200
+}
 
 // Configuração do armazenamento do Multer para uploads de imagens:
 const storage = multer.diskStorage({
@@ -17,6 +23,8 @@ const upload = multer({ storage: storage });
 const routes = (app) => {
 
     app.use(express.json());
+
+    app.use(cors(corsOptions));
 
     app.get("/", (req, res) => {
         res.status(200).send("Bem vindo ao servidor!");
