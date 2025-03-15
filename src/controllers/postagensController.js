@@ -1,5 +1,6 @@
-import { getTodosPosts, criarPostagem } from "../models/postagensModel.js";
+import { getTodosPosts, criarPostagem, atualizarPostagem } from "../models/postagensModel.js";
 import fs from "fs"
+import { ObjectId } from "mongodb";
 
 export async function listarPostagens(req, res) {
     const postagens = await getTodosPosts();
@@ -34,6 +35,23 @@ export async function uploadImagem(req, res) {
         res.status(500).json({"Erro":"Falha na requisição"});
     }
     
+}
+
+export async function atualizarNovaPostagem(req, res) {
+    const id = req.params.id;
+    const urlImagem = `http://localhost:3000/${id}.png`;
+    const postagem = {
+        imgUrl: urlImagem,
+        descricao: req.body.descricao,
+        alt: req.body.alt
+    }
+    try {
+        const postagemCriada = await atualizarPostagem(id, postagem);
+        res.status(200).json(postagemCriada);
+    } catch(erro) {
+        console.error(erro.message);
+        res.status(500).json({"Erro":"Falha na requisição"});
+    }
 }
 
 /*

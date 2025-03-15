@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { listarPostagens, criarNovoPost, uploadImagem } from "../controllers/postagensController.js";
+import { listarPostagens, criarNovoPost, uploadImagem, atualizarNovaPostagem } from "../controllers/postagensController.js";
 
 // Configuração do armazenamento do Multer para uploads de imagens:
 const storage = multer.diskStorage({
@@ -27,6 +27,8 @@ const routes = (app) => {
     app.post("/postagens", criarNovoPost);
 
     app.post("/upload", upload.single("imagem"), uploadImagem);
+
+    app.put("/upload/:id", atualizarNovaPostagem);
 
     //app.get("/postagens/:id", listarPostagensPorId);
 
